@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SampleMenuMasterDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityType Name="tblLogin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="RoleId" Type="int" />
+        </EntityType>
+        <EntityType Name="tblMainMenu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MainMenu" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Roles" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblSubMenu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubMenu" Type="varchar" MaxLength="50" />
+          <Property Name="Controller" Type="varchar" MaxLength="100" />
+          <Property Name="Action" Type="varchar" MaxLength="100" />
+          <Property Name="MainMenuId" Type="int" />
+          <Property Name="RoleId" Type="int" />
+        </EntityType>
+        <Association Name="FK_tblLogin_tblRoles">
+          <End Role="tblRoles" Type="Self.tblRoles" Multiplicity="1" />
+          <End Role="tblLogin" Type="Self.tblLogin" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="tblRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblLogin">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblSubMenu_tblRoles">
+          <End Role="tblMainMenu" Type="Self.tblMainMenu" Multiplicity="0..1" />
+          <End Role="tblSubMenu" Type="Self.tblSubMenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMainMenu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblSubMenu">
+              <PropertyRef Name="MainMenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SampleMenuMasterDBModelStoreContainer">
+          <EntitySet Name="tblLogin" EntityType="Self.tblLogin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblMainMenu" EntityType="Self.tblMainMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblRoles" EntityType="Self.tblRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSubMenu" EntityType="Self.tblSubMenu" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblLogin_tblRoles" Association="Self.FK_tblLogin_tblRoles">
+            <End Role="tblRoles" EntitySet="tblRoles" />
+            <End Role="tblLogin" EntitySet="tblLogin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblSubMenu_tblRoles" Association="Self.FK_tblSubMenu_tblRoles">
+            <End Role="tblMainMenu" EntitySet="tblMainMenu" />
+            <End Role="tblSubMenu" EntitySet="tblSubMenu" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SampleMenuMasterDBModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="SampleMenuMasterDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblLogins" EntityType="SampleMenuMasterDBModel.tblLogin" />
+          <EntitySet Name="tblMainMenus" EntityType="SampleMenuMasterDBModel.tblMainMenu" />
+          <EntitySet Name="tblRoles" EntityType="SampleMenuMasterDBModel.tblRole" />
+          <EntitySet Name="tblSubMenus" EntityType="SampleMenuMasterDBModel.tblSubMenu" />
+          <AssociationSet Name="FK_tblLogin_tblRoles" Association="SampleMenuMasterDBModel.FK_tblLogin_tblRoles">
+            <End Role="tblRoles" EntitySet="tblRoles" />
+            <End Role="tblLogin" EntitySet="tblLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblSubMenu_tblRoles" Association="SampleMenuMasterDBModel.FK_tblSubMenu_tblRoles">
+            <End Role="tblRoles" EntitySet="tblRoles" />
+            <End Role="tblSubMenu" EntitySet="tblSubMenus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblSubMenu_tblRoles1" Association="SampleMenuMasterDBModel.FK_tblSubMenu_tblRoles1">
+            <End Role="tblMainMenu" EntitySet="tblMainMenus" />
+            <End Role="tblSubMenu" EntitySet="tblSubMenus" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="tblLogin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Password" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="RoleId" Type="Int32" />
+          <NavigationProperty Name="tblRole" Relationship="SampleMenuMasterDBModel.FK_tblLogin_tblRoles" FromRole="tblLogin" ToRole="tblRoles" />
+        </EntityType>
+        <EntityType Name="tblMainMenu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MainMenu" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="tblSubMenus" Relationship="SampleMenuMasterDBModel.FK_tblSubMenu_tblRoles1" FromRole="tblMainMenu" ToRole="tblSubMenu" />
+        </EntityType>
+        <EntityType Name="tblRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Roles" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="tblLogin" Relationship="SampleMenuMasterDBModel.FK_tblLogin_tblRoles" FromRole="tblRoles" ToRole="tblLogin" />
+          <NavigationProperty Name="tblSubMenus" Relationship="SampleMenuMasterDBModel.FK_tblSubMenu_tblRoles" FromRole="tblRoles" ToRole="tblSubMenu" />
+        </EntityType>
+        <EntityType Name="tblSubMenu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubMenu" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Controller" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="Action" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="MainMenuId" Type="Int32" />
+          <Property Name="RoleId" Type="Int32" />
+          <NavigationProperty Name="tblRole" Relationship="SampleMenuMasterDBModel.FK_tblSubMenu_tblRoles" FromRole="tblSubMenu" ToRole="tblRoles" />
+          <NavigationProperty Name="tblMainMenu" Relationship="SampleMenuMasterDBModel.FK_tblSubMenu_tblRoles1" FromRole="tblSubMenu" ToRole="tblMainMenu" />
+        </EntityType>
+        <Association Name="FK_tblLogin_tblRoles">
+          <End Role="tblRoles" Type="SampleMenuMasterDBModel.tblRole" Multiplicity="1" />
+          <End Role="tblLogin" Type="SampleMenuMasterDBModel.tblLogin" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="tblRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblLogin">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblSubMenu_tblRoles">
+          <End Role="tblRoles" Type="SampleMenuMasterDBModel.tblRole" Multiplicity="0..1" />
+          <End Role="tblSubMenu" Type="SampleMenuMasterDBModel.tblSubMenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblSubMenu">
+              <PropertyRef Name="MainMenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblSubMenu_tblRoles1">
+          <End Type="SampleMenuMasterDBModel.tblMainMenu" Role="tblMainMenu" Multiplicity="0..1" />
+          <End Type="SampleMenuMasterDBModel.tblSubMenu" Role="tblSubMenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMainMenu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblSubMenu">
+              <PropertyRef Name="MainMenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SampleMenuMasterDBModelStoreContainer" CdmEntityContainer="SampleMenuMasterDBEntities">
+          <EntitySetMapping Name="tblLogins">
+            <EntityTypeMapping TypeName="SampleMenuMasterDBModel.tblLogin">
+              <MappingFragment StoreEntitySet="tblLogin">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblMainMenus">
+            <EntityTypeMapping TypeName="SampleMenuMasterDBModel.tblMainMenu">
+              <MappingFragment StoreEntitySet="tblMainMenu">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MainMenu" ColumnName="MainMenu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblRoles">
+            <EntityTypeMapping TypeName="SampleMenuMasterDBModel.tblRole">
+              <MappingFragment StoreEntitySet="tblRoles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Roles" ColumnName="Roles" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSubMenus">
+            <EntityTypeMapping TypeName="SampleMenuMasterDBModel.tblSubMenu">
+              <MappingFragment StoreEntitySet="tblSubMenu">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SubMenu" ColumnName="SubMenu" />
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="MainMenuId" ColumnName="MainMenuId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="MenuDBContext">
+        <EntityTypeShape EntityType="SampleMenuMasterDBModel.tblLogin" Width="1.5" PointX="3" PointY="1.125" Height="1.9802864583333335" IsExpanded="true" />
+        <EntityTypeShape EntityType="SampleMenuMasterDBModel.tblMainMenu" Width="1.5" PointX="5.75" PointY="0.75" Height="1.4033821614583335" IsExpanded="true" />
+        <EntityTypeShape EntityType="SampleMenuMasterDBModel.tblRole" Width="1.5" PointX="0.75" PointY="2.75" Height="1.7879850260416652" IsExpanded="true" />
+        <EntityTypeShape EntityType="SampleMenuMasterDBModel.tblSubMenu" Width="1.5" PointX="3" PointY="3.75" Height="2.3648893229166656" IsExpanded="true" />
+        <AssociationConnector Association="SampleMenuMasterDBModel.FK_tblLogin_tblRoles" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="2.9276432291666667" />
+          <ConnectorPoint PointX="3" PointY="2.9276432291666667" />
+        </AssociationConnector>
+        <AssociationConnector Association="SampleMenuMasterDBModel.FK_tblSubMenu_tblRoles" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="4.1439925130208319" />
+          <ConnectorPoint PointX="3" PointY="4.1439925130208319" />
+        </AssociationConnector>
+        <AssociationConnector Association="SampleMenuMasterDBModel.FK_tblSubMenu_tblRoles1" >
+          <ConnectorPoint PointX="6.5" PointY="2.34568359375" />
+          <ConnectorPoint PointX="6.5" PointY="5.0285953776041659" />
+          <ConnectorPoint PointX="4.5" PointY="5.0285953776041659" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

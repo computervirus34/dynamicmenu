@@ -1,0 +1,43 @@
+﻿<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      
+    </div>
+    <ul class="nav navbar-nav">
+   @if (Session["MenuMaster"] != null)
+   {
+        
+       var MenuMaster = (List<DynamicMenyBind.Models.MenuModels>)Session["MenuMaster"];
+       var groupByMenu = MenuMaster.GroupBy(x => x.MainMenuName).ToList();
+         
+         foreach (var MenuList in groupByMenu)
+         {
+            
+              <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">@MenuList.Key<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+             @foreach (var SubMenuList in MenuList)
+             {
+                 <li>@Html.ActionLink(SubMenuList.SubMenuName,SubMenuList.ActionName,SubMenuList.ControllerName)</li>
+             }
+             </ul>
+              </li>
+
+       }
+   }
+
+    </ul>
+
+     <ul class="nav navbar-nav navbar-right">
+     @if (Session["LoginCredentials"] != null)
+     {
+          <li>@Html.ActionLink("Logout", "LogOff", "Login")</li>
+     }
+     else
+     {
+        <li>@Html.ActionLink("Login", "Login", "Login")</li>
+     }
+     
+    </ul>
+    
+  </div>
+</nav>

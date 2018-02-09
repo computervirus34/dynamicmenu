@@ -1,0 +1,56 @@
+﻿@model DynamicMenyBind.Models.LoginModels
+
+@{
+    ViewBag.Title = "Login";
+}
+
+
+
+<h2>Login</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        
+        <div class="form-group">
+         <div class="row">
+         <div class="col-sm-4">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.UserName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.UserName)
+            @Html.ValidationMessageFor(model => model.UserName)
+        </div>
+        </div>
+        </div>
+        <div class="row">
+         <div class="col-sm-4">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Password)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Password)
+            @Html.ValidationMessageFor(model => model.Password)
+        </div>
+        <span style="color:Red">@ViewBag.ErrorMsg</span>
+        <br />
+        <p>
+            <input type="submit" class="btn btn-primary" value="Create" />
+        </p>
+        </div>
+        </div>
+        </div>
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            $('#UserName').addClass('form-control');
+            $('#Password').addClass('form-control');
+        });
+    </script>
+}
